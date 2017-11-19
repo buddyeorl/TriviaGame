@@ -2,34 +2,95 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  	<link rel="stylesheet" href="assets/css/reset.css">
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+  	<link rel="stylesheet" href="assets/css/style.css">
+ 	<!-- JQuery -->
+  	<script src="https://code.jquery.com/jquery.js"></script>
+	<title>Trivia Game</title>
 </head>
 <body>
-	<container id="mainMenu"> 
-	<button id="start">START</button>
-
-	</container>
-	<container id="triviaScreen"> 
-	<p>TRIVIA SCREEN</p>
-	<div><b id="timer">20</b></div>
-	<div id="questions"></div>
-	<div>
-		<ol>
-			<li id="answer0"></li>
-			<li id="answer1"></li>
-			<li id="answer2"></li>
-			<li id="answer3"></li>
-		</ol>
+	<!-- ===========================main menu starts here ========================= -->
+	<div class="row">
+		<div class="col-sm-2 center"></div>
+		<div class="col-sm-8 center text-center">
+			<div class="container-fluid">
+				<container id="mainMenu"> 
+					<button type="button" class="btn btn-success btn-lg" id="start">Click here to Start</button>
+				</container>
+			</div>
+		</div>
+		<div class="col-sm-2 center"></div>
 	</div>
-	</container>
-	<container id="isWinScreen"> 
-	<p>WIN SCREEN</p>
-	<div><b id="timeUp"></b></div>
-	</container>
-	<container id="results"> 
-	<p>RESULTS</p>
-	<button id="startAgain">PLAY AGAIN?</button>
-	</container>
+	<!-- ===========================main menu ends here ========================= -->
+
+	<!-- ===========================trivia screen starts here ========================= -->
+	<div class="row text-center align-middle" id="triviaScreen">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8 align-middle">
+			<div class="container-fluid">
+				<container> 
+					<p>TRIVIA SCREEN</p>
+					<div class="card text-white bg-primary mb-3" style="max-width: 80rem;">
+						<div class="card-header">
+							<div><b id="timer">20</b></div>
+						</div>
+  						<div class="card-body">
+    						<h4 class="card-title"><div id="questions"></div></h4>
+    						<p class="card-text">						
+		    					<ol>
+									<a href="#" class="list-group-item list-group-item-action list-group-item-primary" id="answer0"></a>
+									<a href="#" class="list-group-item list-group-item-action list-group-item-primary" id="answer1"></a>
+									<a href="#" class="list-group-item list-group-item-action list-group-item-primary" id="answer2"></a>
+									<a href="#" class="list-group-item list-group-item-action list-group-item-primary" id="answer3"></a>
+								</ol>
+							</p>
+  						</div>
+					</div>
+				</container>
+			</div>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<!-- ===========================trivia screen ends here ========================= -->
+
+	<!-- ===========================isWinScreen starts here ========================= -->
+	<div class="row">
+		<div class="col-sm-2 center"></div>
+		<div class="col-sm-8 center text-center">
+			<div class="container-fluid">
+			<container id="isWinScreen"> 
+				<p>WIN SCREEN</p>
+				<div><b class="alert alert-success" role="alert" id="correctAnswer"></b></div>
+				<div><b class="alert alert-danger" role="alert" id="wrongAnswer"></b></div>		
+				<div><b class="alert alert-warning" role="alert" id="timeUp"></b></div>
+			</container>
+			</div>
+		</div>
+		<div class="col-sm-2 center"></div>
+	</div>
+	<!-- ===========================isWinScreen ends here ========================= -->
+
+	<!-- ===========================results screen starts here ========================= -->
+	<div class="row">
+		<div class="col-sm-2 center"></div>
+		<div class="col-sm-8 center text-center">
+			<div class="container-fluid">
+				<container id="results"> 
+					<p>RESULTS</p>
+					<button type="button" class="btn btn-success btn-lg" id="startAgain">Play Again?</button>
+				</container>
+			</div>
+		</div>
+		<div class="col-sm-2 center"></div>
+	</div>	
+	<!-- ===========================results screen ends here ========================= -->
 
 </body>
 

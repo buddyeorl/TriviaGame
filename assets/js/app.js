@@ -76,7 +76,7 @@ function timeChecker()
 		clearingVariable = setInterval(timer, 1000);
 	} else
 	{
-		$("#timer").html(timeLeft - 5);
+		$("#timer").html("Time left : " + (timeLeft - 5));
 	}
 }
 
@@ -90,14 +90,13 @@ function resettime(currentGuessOp)
 	if ( timeLeft < 6 && currentGuessOp === true)
 	{
 		console.log("You Guessed Correctly");
-		$("#isWinScreen").html("You Guessed Correctly!!!");	
+		$("#correctAnswer").html("You Guessed Correctly!!!");	
 		screenSwitcher();
 	} 
 	if ( timeLeft < 6 && currentGuessOp === false)
 	{
 		console.log("Wrong Answer");
-		$("#timer").html("Wrong Answer");
-		$("#isWinScreen").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
+		$("#wrongAnswer").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
 		screenSwitcher();
 	} 
 	if (loses > 3)
@@ -142,10 +141,22 @@ function isWin()
 			wins++;
 			clickChecker= false;
 			console.log("you win");
+			//===========================
+			// the following three lines will hide correct and timesup tags and show correctAnswer tag only
+			$("#correctAnswer").show();
+			$("#wrongAnswer").hide();
+			$("#timeUp").hide();
+			//===========================
 			resettime(true);
 		} else if (guessedAnswer !== correctAnswer && clickChecker === true)
 		{
 			loses++;
+			//===========================
+			// the following three lines will hide timesup and wrong answer tags and show wrong answer tag only
+			$("#correctAnswer").hide();
+			$("#wrongAnswer").show();
+			$("#timeUp").hide();
+			//===========================
 			clickChecker= false;
 			console.log("you lose");
 			resettime(false);
@@ -224,10 +235,16 @@ function screenSwitcher()
 	if (guessedAnswer === 5)
 	{
 	console.log("loses " + loses)
+	//===========================
+	// the following three lines will hide correct and wrong answer tags and show time's up tag only
+	$("#correctAnswer").hide();
+	$("#wrongAnswer").hide();
+	$("#timeUp").show();
+	//===========================
 	guessedAnswer = 6; // this line was written to prevent loses ++ to keep increase every second below between 0 and 5
 	loses++;
 	console.log("loses " + loses)
-	$("#isWinScreen").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);		
+	$("#timeUp").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);		
 	}
 	$("#mainMenu").hide();
 	$("#triviaScreen").hide();
