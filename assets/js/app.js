@@ -1,14 +1,52 @@
 //========================================================================
 // Global Vars
+var currentTrivia;
+var ranPicker;
 var timeLeft = 26;
 var clearingVariable;
 var mainMenu= true;
 var triviaScreen = false;
 var isWinScreen = false;
 var results = false;
+var wins = 0;
+var loses = 0;
 var correctAnswer;
 var guessedAnswer = 5 ;
 var clickChecker = false;
+var currentGuess = "none";
+
+//========================================================================
+// Reset Game Variables
+function resetVar()
+{
+currentTrivia;
+ranPicker;
+timeLeft = 26;
+clearingVariable;
+mainMenu= true;
+triviaScreen = false;
+isWinScreen = false;
+results = false;
+wins = 0;
+loses = 0;
+correctAnswer;
+guessedAnswer = 5 ;
+clickChecker = false;
+currentGuess = "none";	
+}
+
+//========================================================================
+// Array Random Object Picker
+function randomObjectPicker()
+{
+  ranPicker = Math.floor( Math.random() * Object.values(trivia)[0].length);
+  console.log("random number generated " + ranPicker);
+  console.log("random question generated " + Object.values(trivia)[0][ranPicker]);
+  currentTrivia = Object.values(trivia)[0][ranPicker]; // the zero means the index 0 in the object i created, which holds the questions
+  return Object.values(trivia)[0][ranPicker];
+}
+
+
 //========================================================================
 // Timer for questions starts here
 
@@ -29,9 +67,11 @@ function timeChecker()
 	screenSwitcher();
 	if ( timeLeft === 0)
 	{
+		guessedAnswer =5; // reset the guessed answer
 		clearInterval(clearingVariable);
-		console.log("Time's Up");
-		$("#timer").html("Time's Up");
+		console.log("Time check time's up");
+		// $("#isWinScreen").append('<div>Time s Up</div>');
+		// $("#isWinScreen").append("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][0]);	
 		timeLeft = 26;
 		clearingVariable = setInterval(timer, 1000);
 	} else
@@ -43,24 +83,35 @@ function timeChecker()
 //========================================================================
 // Reset Timer
 
-function resettime()
+function resettime(currentGuessOp)
 {
 	timeLeft = 5;
-	screenSwitcher();
-	if ( timeLeft === 0)
+
+	if ( timeLeft < 6 && currentGuessOp === true)
 	{
-		clearInterval(clearingVariable);
-		$("#timer").html("You Guessed Correctly");
-		timeLeft = 26;
-		clearingVariable = setInterval(timer, 1000);
+		console.log("You Guessed Correctly");
+		$("#isWinScreen").html("You Guessed Correctly!!!");	
+		screenSwitcher();
 	} 
+	if ( timeLeft < 6 && currentGuessOp === false)
+	{
+		console.log("Wrong Answer");
+		$("#timer").html("Wrong Answer");
+		$("#isWinScreen").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
+		screenSwitcher();
+	} 
+	if (loses > 3)
+	{
+		console.log("GAME OVER");
+		screenSwitcher();
+	}
 }
 //========================================================================
 // Win message will be posted here
 
 function isWin()
 {
-
+	
 	$("#answer0").on("click", function()
 	{
 		console.log("guessed 0");
@@ -88,14 +139,37 @@ function isWin()
 	{
 		if (guessedAnswer === correctAnswer && clickChecker === true)
 		{
+			wins++;
+			clickChecker= false;
 			console.log("you win");
-			resettime();
-		} else 
+			resettime(true);
+		} else if (guessedAnswer !== correctAnswer && clickChecker === true)
 		{
-			// console.log("you lose");
-		}
+			loses++;
+			clickChecker= false;
+			console.log("you lose");
+			resettime(false);
+		} 
 	}
 }
+
+//========================================================================
+// This function will clean the answer's list for next round
+function answerCleaner()
+{
+	for (var i=0; i < 3; i++)
+		{
+			$("#answer" + i).html("");
+		}
+}
+
+//========================================================================
+// This function will pick a new question to be displayed
+function questionPicker()
+{
+	$("#questions").html(randomObjectPicker());
+}
+
 
 //========================================================================
 // Screen Switch will start here
@@ -123,22 +197,22 @@ function screenSwitcher()
 	triviaScreen = true;
 	isWinScreen = false;
 	results = false;
-	$("#questions").html(Object.values(trivia)[0][0]);
+	questionPicker();
 	var answerPosition = Math.floor( Math.random() * 4);
 	correctAnswer = answerPosition; // this will store the correct answer position in the array
 	console.log("position " + answerPosition);
 //==============================================================
 //This will randomly place the correct answer between position 0 and 3, and later the loop will place the incorrect answers
-	$("#answer" + answerPosition).html(Object.values(trivia)[1][0]);
+	$("#answer" + answerPosition).html(Object.values(trivia)[1][ranPicker]);
 	for (var i=0; i < 4; i++)
 	{
 		if (answerPosition !== i)
 		{
-			$("#answer" + i).html(Object.values(trivia)[2][0][i]);
+			$("#answer" + i).html(Object.values(trivia)[2][ranPicker][i]);
 		} else
 		{
 			answerPosition++;
-			$("#answer" + answerPosition).html(Object.values(trivia)[2][0][i]);
+			$("#answer" + answerPosition).html(Object.values(trivia)[2][ranPicker][i]);
 			console.log(answerPosition);
 		}
 	}
@@ -146,6 +220,15 @@ function screenSwitcher()
 	}
 	if (timeLeft < 6 && timeLeft > -1)
 	{
+	console.log("Time's up");
+	if (guessedAnswer === 5)
+	{
+	console.log("loses " + loses)
+	guessedAnswer = 6; // this line was written to prevent loses ++ to keep increase every second below between 0 and 5
+	loses++;
+	console.log("loses " + loses)
+	$("#isWinScreen").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);		
+	}
 	$("#mainMenu").hide();
 	$("#triviaScreen").hide();
 	$("#isWinScreen").show();
@@ -154,13 +237,22 @@ function screenSwitcher()
 	triviaScreen = false;
 	isWinScreen = true;
 	results = false;
-	$("#isWinScreen").html("The Right Answer was: " + Object.values(trivia)[1][0]);	
-//==============================================================
-//Clean the Answer lists for new round.
-	for (var i=0; i < 3; i++)
-	{
-		$("#answer" + i).html("");
+	answerCleaner();//Clean the Answer lists for new round.
 	}
+//==============================================================
+	if (loses > 3)
+	{
+		answerCleaner();//Clean the Answer lists for new round.
+
+		$("#mainMenu").hide();
+		$("#triviaScreen").hide();
+		$("#isWinScreen").hide();
+		$("#results").show();
+		mainMenu= false;
+		triviaScreen = false;
+		isWinScreen = true;
+		results = true;
+		window.clearInterval(clearingVariable);
 	}
 }
 
@@ -168,8 +260,9 @@ function screenSwitcher()
 
 //========================================================================
 // Main Game Starts Here
+randomObjectPicker();
 $("#triviaScreen").hide();
-console.log(Object.values(trivia)[0][0]);
+console.log(Object.values(trivia)[1][ranPicker]);
 $("#isWinScreen").hide();
 $("#results").hide();
 $("#start").on("click", function()
@@ -177,6 +270,17 @@ $("#start").on("click", function()
 	clearingVariable = setInterval(timer, 1000);
 		
 });  
+$("#startAgain").on("click", function()
+	{
+resetVar();
+randomObjectPicker();
+$("#triviaScreen").hide();
+console.log(Object.values(trivia)[1][ranPicker]);
+$("#isWinScreen").hide();
+$("#results").hide();
+	clearingVariable = setInterval(timer, 1000);
+		
+}); 
 
 
 
