@@ -2,7 +2,7 @@
 // Global Vars
 var currentTrivia;
 var ranPicker;
-var timeLeft = 26;
+var timeLeft = 16;
 var clearingVariable;
 var mainMenu= true;
 var triviaScreen = false;
@@ -10,6 +10,7 @@ var isWinScreen = false;
 var results = false;
 var wins = 0;
 var loses = 0;
+var tries = 0;
 var correctAnswer;
 var guessedAnswer = 5 ;
 var clickChecker = false;
@@ -21,7 +22,7 @@ function resetVar()
 {
 currentTrivia;
 ranPicker;
-timeLeft = 26;
+timeLeft = 16;
 clearingVariable;
 mainMenu= true;
 triviaScreen = false;
@@ -32,7 +33,8 @@ loses = 0;
 correctAnswer;
 guessedAnswer = 5 ;
 clickChecker = false;
-currentGuess = "none";	
+currentGuess = "none";
+tries = 0;	
 }
 
 //========================================================================
@@ -72,7 +74,7 @@ function timeChecker()
 		console.log("Time check time's up");
 		// $("#isWinScreen").append('<div>Time s Up</div>');
 		// $("#isWinScreen").append("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][0]);	
-		timeLeft = 26;
+		timeLeft = 16;
 		clearingVariable = setInterval(timer, 1000);
 	} else
 	{
@@ -92,6 +94,7 @@ function resettime(currentGuessOp)
 		console.log("You Guessed Correctly");
 		$("#correctAnswer").html("You Guessed Correctly!!!");
 		$("#correctAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
+		$("#summary").append("<tr class='table-success'><td>" + Object.values(trivia)[1][ranPicker] + "</td><td>--</td><td>--</td></tr>"); // this line will add items to the summary
 		screenSwitcher();
 	} 
 	if ( timeLeft < 6 && currentGuessOp === false)
@@ -99,13 +102,9 @@ function resettime(currentGuessOp)
 		console.log("Wrong Answer");
 		$("#wrongAnswer").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
 		$("#wrongAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )
+		$("#summary").append("<tr class='table-danger'><td>--</td><td>" + Object.values(trivia)[1][ranPicker] + "</td><td>--</td></tr>"); // this line will add items to the summary
 		screenSwitcher();
 	} 
-	if (loses > 3)
-	{
-		console.log("GAME OVER");
-		screenSwitcher();
-	}
 }
 //========================================================================
 // Win message will be posted here
@@ -141,6 +140,7 @@ function isWin()
 		if (guessedAnswer === correctAnswer && clickChecker === true)
 		{
 			wins++;
+			tries++;
 			clickChecker= false;
 			console.log("you win");
 			//===========================
@@ -153,6 +153,7 @@ function isWin()
 		} else if (guessedAnswer !== correctAnswer && clickChecker === true)
 		{
 			loses++;
+			tries++;
 			//===========================
 			// the following three lines will hide timesup and wrong answer tags and show wrong answer tag only
 			$("#correctAnswer").hide();
@@ -189,7 +190,7 @@ function questionPicker()
 
 function screenSwitcher()
 {
-	if (timeLeft === 26)
+	if (timeLeft === 16)
 	{
 	$("#mainMenu").show();
 	$("#triviaScreen").hide();
@@ -200,7 +201,7 @@ function screenSwitcher()
 	isWinScreen = false;
 	results = false;
 	}
-	if (timeLeft < 26 && timeLeft > 5 && triviaScreen=== false)
+	if (timeLeft < 16 && timeLeft > 5 && triviaScreen=== false)
 	{
 	$("#mainMenu").hide();
 	$("#triviaScreen").show();
@@ -245,9 +246,11 @@ function screenSwitcher()
 	//===========================
 	guessedAnswer = 6; // this line was written to prevent loses ++ to keep increase every second below between 0 and 5
 	loses++;
+	tries++;
 	console.log("loses " + loses)
 	$("#timeUp").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);	
 	$("#timeUp").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
+	$("#summary").append("<tr class='table-warning'><td>--</td><td>--</td><td>" + Object.values(trivia)[1][ranPicker] + "</td></tr>"); // this line will add items to the summary
 	}
 	$("#mainMenu").hide();
 	$("#triviaScreen").hide();
@@ -260,7 +263,7 @@ function screenSwitcher()
 	answerCleaner();//Clean the Answer lists for new round.
 	}
 //==============================================================
-	if (loses > 3)
+	if (loses > 3 && timeLeft === 1)
 	{
 		answerCleaner();//Clean the Answer lists for new round.
 
@@ -274,6 +277,21 @@ function screenSwitcher()
 		results = true;
 		window.clearInterval(clearingVariable);
 	}
+//==============================================================
+	if (tries > 09 && timeLeft === 1)
+	{
+		answerCleaner();//Clean the Answer lists for new round.
+
+		$("#mainMenu").hide();
+		$("#triviaScreen").hide();
+		$("#isWinScreen").hide();
+		$("#results").show();
+		mainMenu= false;
+		triviaScreen = false;
+		isWinScreen = true;
+		results = true;
+		window.clearInterval(clearingVariable);
+	}	
 }
 
 
@@ -292,13 +310,14 @@ $("#start").on("click", function()
 });  
 $("#startAgain").on("click", function()
 	{
-resetVar();
-randomObjectPicker();
-$("#triviaScreen").hide();
-console.log(Object.values(trivia)[1][ranPicker]);
-$("#isWinScreen").hide();
-$("#results").hide();
-	clearingVariable = setInterval(timer, 1000);
+		$("#summary").html("");
+		resetVar();
+		randomObjectPicker();
+		$("#triviaScreen").hide();
+		console.log(Object.values(trivia)[1][ranPicker]);
+		$("#isWinScreen").hide();
+		$("#results").hide();
+		clearingVariable = setInterval(timer, 1000);
 		
 }); 
 
