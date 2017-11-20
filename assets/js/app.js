@@ -90,13 +90,15 @@ function resettime(currentGuessOp)
 	if ( timeLeft < 6 && currentGuessOp === true)
 	{
 		console.log("You Guessed Correctly");
-		$("#correctAnswer").html("You Guessed Correctly!!!");	
+		$("#correctAnswer").html("You Guessed Correctly!!!");
+		$("#correctAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
 		screenSwitcher();
 	} 
 	if ( timeLeft < 6 && currentGuessOp === false)
 	{
 		console.log("Wrong Answer");
 		$("#wrongAnswer").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
+		$("#wrongAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )
 		screenSwitcher();
 	} 
 	if (loses > 3)
@@ -244,7 +246,8 @@ function screenSwitcher()
 	guessedAnswer = 6; // this line was written to prevent loses ++ to keep increase every second below between 0 and 5
 	loses++;
 	console.log("loses " + loses)
-	$("#timeUp").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);		
+	$("#timeUp").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);	
+	$("#timeUp").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
 	}
 	$("#mainMenu").hide();
 	$("#triviaScreen").hide();
