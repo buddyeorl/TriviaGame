@@ -93,7 +93,7 @@ function resettime(currentGuessOp)
 	{
 		console.log("You Guessed Correctly");
 		$("#correctAnswer").html("You Guessed Correctly!!!");
-		$("#correctAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
+		$("#correctAnswer").append("<img class='featurette-image img-fluid' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
 		$("#summary").append("<tr class='table-success'><td>" + Object.values(trivia)[1][ranPicker] + "</td><td>--</td><td>--</td></tr>"); // this line will add items to the summary
 		screenSwitcher();
 	} 
@@ -101,7 +101,7 @@ function resettime(currentGuessOp)
 	{
 		console.log("Wrong Answer");
 		$("#wrongAnswer").html("Wrong Answer, the correct answer was: " + Object.values(trivia)[1][ranPicker]);	
-		$("#wrongAnswer").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )
+		$("#wrongAnswer").append("<img class='featurette-image img-fluid' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )
 		$("#summary").append("<tr class='table-danger'><td>--</td><td>" + Object.values(trivia)[1][ranPicker] + "</td><td>--</td></tr>"); // this line will add items to the summary
 		screenSwitcher();
 	} 
@@ -249,7 +249,7 @@ function screenSwitcher()
 	tries++;
 	console.log("loses " + loses)
 	$("#timeUp").html("Time's Up, the correct Answer was :" + Object.values(trivia)[1][ranPicker]);	
-	$("#timeUp").append("<img class='img-fluid' style='min-width:80%;max-width:80%;max-height:50%;' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
+	$("#timeUp").append("<img class='featurette-image img-fluid mx-auto' alt='Responsive image' src=" + Object.values(trivia)[3][ranPicker] + ">" )	
 	$("#summary").append("<tr class='table-warning'><td>--</td><td>--</td><td>" + Object.values(trivia)[1][ranPicker] + "</td></tr>"); // this line will add items to the summary
 	}
 	$("#mainMenu").hide();
