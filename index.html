@@ -16,8 +16,12 @@
 	<title>Trivia Game</title>
 </head>
 <body>
+	<!-- HEADER STARTS HERE -->
+
+	<!-- ============================================= -->
+
 	<!-- ===========================main menu starts here ========================= -->
-	<div class="row">
+	<div class="row m-5">
 		<div class="col-sm-2 center"></div>
 		<div class="col-sm-8 center text-center">
 			<div class="container-fluid">
@@ -43,7 +47,7 @@
 			<div class="container-fluid">
 				<container> 
 					<p></p>
-					<div class="card text-white bg-primary mb-3" style="max-width: 80rem;">
+					<div class="card text-dark mb-3" style="max-width: 80rem;">
 						<div class="card-header">
 							<div><b id="timer">20</b></div>
 						</div>
@@ -72,11 +76,11 @@
 		<div class="col-sm-8 center text-center">
 			<container id="isWinScreen"> 
 				<p></p>
-				<div class="card text-white bg-success mb-3 center" id="correctAnswer" style="max-width: 40rem; max-height: 40rem;">
+				<div class="card text-white bg-success mb-3 center" id="correctAnswer" style="width: 400px; height: 400px;">
 				</div>
-				<div class="card text-white bg-danger mb-3 center" id="wrongAnswer" style="max-width: 40rem; max-height: 40rem;">
+				<div class="card text-white bg-danger mb-3 center" id="wrongAnswer" style="width: 400px; height: 400px;">
 				</div>
-				<div class="card text-white bg-warning mb-3 center" id="timeUp" style="max-width: 40rem; max-height: 40rem;">
+				<div class="card text-white bg-warning mb-3 center" id="timeUp" style="width: 400px; height: 400px;">
 				</div>
 			</container>
 		</div>
@@ -94,9 +98,9 @@
 					<table class="table">
 					  <thead class="thead-light">
 					    <tr>
-					      <th scope="col"><b>Wins</b></th>
-					      <th scope="col"><b>Loses</b></th>
-					      <th scope="col"><b>Time's Up</b></th>
+					      <th scope="col"><b>Correct Answers</b></th>
+					      <th scope="col"><b>Wrong Answers</b></th>
+					      <th scope="col"><b>Time's Ups</b></th>
 					    </tr>
 					  </thead>
 					  <tbody id="summary">

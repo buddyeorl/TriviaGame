@@ -8,13 +8,14 @@ box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
 box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
 }
 
-body
-{
-background: linear-gradient(#ffffff 50%, rgba(255,255,255,0) 0) 0 0,
-radial-gradient(circle closest-side, #FFFFFF 53%, rgba(255,255,255,0) 0) 0 0,
-radial-gradient(circle closest-side, #FFFFFF 50%, rgba(255,255,255,0) 0) 55px 0 #48B;
-background-size:110px 200px;
-background-repeat:repeat-x;
+
+body {
+  background: red; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left,rgba(0, 137, 123, 1),rgba(167, 255, 235, 1)); /*Safari 5.1-6*/
+  background: -o-linear-gradient(right,rgba(0, 137, 123, 1),rgba(167, 255, 235, 1)); /*Opera 11.1-12*/
+  background: -moz-linear-gradient(right,rgba(0, 137, 123, 1),rgba(167, 255, 235, 1)); /*Fx 3.6-15*/
+  background: linear-gradient(to right, rgba(0, 137, 123, 1), rgba(167, 255, 235, 1)); /*Standard*/
+  height: 220px;
 }
 
 .center
